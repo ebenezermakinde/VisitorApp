@@ -1,3 +1,4 @@
+# VisitorApp
 ### To run the django application as a standalone:
 *  Create a virtual environment
 *  Run installation of packages with pip install -r requirements.txt or pip3 install -r requirements.txt (if you're using python3)
