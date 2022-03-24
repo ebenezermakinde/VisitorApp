@@ -1,9 +1,25 @@
 FROM python:3.7-alpine
 
+# set working directory
+WORKDIR /var/www/app
 
-RUN addgroup -S appgroup && adduser -S ebenezer -G appgroup
+COPY ./start.sh /var/www/app/
+RUN chmod +x start.sh
+
+COPY ./requirements.txt /requirements.txt
+
+RUN apk update && \
+    apk add --virtual build-deps gcc python3-dev musl-dev && \
+    apk add \
+    sudo \
+    && pip install -r /requirements.txt
 
 
+
+RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
+
+
+RUN adduser -S ebenezer wheel
 
 USER ebenezer
 
@@ -11,21 +27,19 @@ USER ebenezer
 # copy requirements.txt to /requirements.txt in the container
 # to avoid reinstalling packages when a container is rebuilt
 # it will only reinstall packages when changes has been made to the file
-COPY ./requirements.txt /requirements.txt
 
 
-
-#run package installations
 RUN pip install -r /requirements.txt
 
 
 
-# set working directory
-WORKDIR /var/www/app
+
 
 # copy project root to app folder in the container
 COPY . /var/www/app
 
-CMD ["python","manage.py","runserver"]
+
+
+ENTRYPOINT [ "./start.sh" ]
 
 EXPOSE 8000
