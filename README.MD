@@ -4,6 +4,16 @@
 *  Run installation of packages with pip install -r requirements.txt or pip3 install -r requirements.txt (if you're using python3)
 *  Start the application with python manage.py runserver and access it on localhost:8000 or start with python3 manage.py runserver (for same reason as pt. 3)
 
+### Sample output
+```json
+{
+    "timestamp": "2022-03-24T20:11:01.732799Z",
+    "hostname": "127.0.0.1:8000",
+    "engine": "django.db.backends.sqlite3",
+    "visitor_ip": "127.0.0.1"
+}
+```
+
 ### To run django application in docker:
 * Install docker on your machine
 * Run docker build --tag visitorapp .
